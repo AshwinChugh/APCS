@@ -12,6 +12,8 @@ public class Runner
                     startGame();
                 if(!playing)
                     return;
+                
+                Thread.sleep(200);
              }
     }
 
