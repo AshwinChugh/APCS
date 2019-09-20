@@ -20,6 +20,7 @@ public class Runner
         Formulas formulas = new Formulas();
          
         System.out.println("Select a formula. Enter in a number");
+        System.out.println("0 - Quit Game");
         System.out.println("1 - Volume of a Cone");
         System.out.println("2 - Area of Square");
         System.out.println("3 - Area of Rectangle");
@@ -42,7 +43,8 @@ public class Runner
         switch(selection)
         {
             case 0:
-                //do code here
+                System.out.println("Exiting Game...");
+                playing = false;
                 break;
             case 1:
                 formulas.volCone();
@@ -91,11 +93,12 @@ public class Runner
                 formulas.finalPositionFall();
                 break;
             default:
-                //code here
+                System.out.println("Invalid choice entered.");
                 break;
 
         }
-        continueGame();
+        if(playing)
+            continueGame();
     }
 
     public static void continueGame()
