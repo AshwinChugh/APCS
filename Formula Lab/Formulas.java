@@ -158,8 +158,6 @@ public class Formulas
         System.out.println("Final velcity from fall calculation");
         System.out.println("Enter initial velocity");
         double initialVelocity = input.nextDouble();
-        System.out.println("Etner in height of drop");
-        double acceleration = input.nextDouble();
         System.out.println("Enter in time of drop");
         double time = input.nextDouble();
         double finalVelocity = initialVelocity + (gravity*time);
