@@ -2,8 +2,8 @@ import java.util.Scanner;
  
 public class Runner
 {
-    public static boolean playing = true;
-    public static Scanner kb = new Scanner(System.in);
+    private static boolean playing = true;
+    private static Scanner kb = new Scanner(System.in);
     public static void main(String[] args)
     {
              while(true)
