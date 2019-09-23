@@ -1,6 +1,4 @@
 import java.util.Scanner;
-import java.util.function.IntPredicate;
-
  
 public class Formulas
 {
@@ -76,7 +74,7 @@ public class Formulas
         System.out.println("Enter radius");
         double radius = input.nextDouble();
         double cirumference = 2*pi*radius;
-        System.out.println("The area of the square is "+ cirumference);
+        System.out.println("The circumference of the circle is "+ cirumference);
     }
 
     public void areaCircle()//8
@@ -85,7 +83,7 @@ public class Formulas
         System.out.println("Enter in radius");
         double radius = input.nextDouble();
         double area = pi*radius*radius;
-        System.out.println("The area of the square is "+ area);
+        System.out.println("The area of the circle is "+ area);
     }
 
     public void areaParallelogram()//9
@@ -115,7 +113,7 @@ public class Formulas
     //physics formulas
     public void deltaPosition()//1
     {
-        System.out.println("1 Dimension change in position calculation");
+        System.out.println("1D(Dimension) Change in Position");
         System.out.println("Enter in initial x position");
         double position1 = input.nextDouble();
         System.out.println("Enter in final x position");
@@ -155,7 +153,7 @@ public class Formulas
 
     public void finalVelocityFall()//4 -- uses gravity
     {
-        System.out.println("Final velcity from fall calculation");
+        System.out.println("[Gravity]Final velcity from free fall calculation");
         System.out.println("Enter initial velocity");
         double initialVelocity = input.nextDouble();
         System.out.println("Enter in time of drop");
@@ -166,7 +164,7 @@ public class Formulas
 
     public void finalPositionFall()//5 -- uses gravity
     {
-        System.out.println("Final position of a certain time of fall");
+        System.out.println("[Gravity]Final position of a certain time of free fall");
         System.out.println("Enter in time(in seconds) of fall");
         double time = input.nextDouble();
         System.out.println("Enter in initial velocity");
