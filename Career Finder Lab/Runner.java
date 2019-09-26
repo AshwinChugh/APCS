@@ -1,12 +1,14 @@
 import java.util.Scanner;
 
+import javax.lang.model.util.ElementScanner6;
+
 public class Runner
 {
 
     //profiles
-    private static Career p1 = new Career("John Smith", 28, "Science", "Movies", "Cookies");
-    private static Career p2 = new Career("Adam Levington", 34, "Math", "Programming", "Coffee");
-    private static Career p3 = new Career("Lucy Lemon", 26, "English", "Reading", "Tea");
+    private static Career p1 = new Career("john smith", 28, "science", "music", "cookies");
+    private static Career p2 = new Career("adam levington", 34, "math", "sports", "pizza");
+    private static Career p3 = new Career("lucy lemon", 26, "english", "music", "pizza");
 
     //generic instance variables
     private static boolean running=true;
@@ -47,17 +49,18 @@ public class Runner
             setOWInfo();
             p1.updateProfile(owName, owAge, owSubject, owHobby, owFood);
         }
-        if(uProfile.toLowerCase().equals("p2"))
+        else if(uProfile.toLowerCase().equals("p2"))
         {
             setOWInfo();
             p2.updateProfile(owName, owAge, owSubject, owHobby, owFood);
         }
-        if(uProfile.toLowerCase().equals("p3"))
+        else if(uProfile.toLowerCase().equals("p3"))
         {
             setOWInfo();
             p3.updateProfile(owName, owAge, owSubject, owHobby, owFood);
         }
-        if(!(uProfile.toLowerCase().equals("p2")||uProfile.toLowerCase().equals("p2")||uProfile.toLowerCase().equals("p3")))
+        else if(uProfile.toLowerCase().equals("exit")) { running = false; }
+        else//(!(uProfile.toLowerCase().equals("p2")||uProfile.toLowerCase().equals("p2")||uProfile.toLowerCase().equals("p3")))
         {
             System.out.println("Invalid Profile Selected...");
         }
@@ -66,14 +69,14 @@ public class Runner
     private static void setOWInfo()//get input for all subjects
     {
         System.out.println("Enter in new name: ");
-        owName = input.nextLine();
+        owName = input.nextLine().toLowerCase();
         System.out.println("Enter in new age: ");
         owAge = input.nextInt();
         input.nextLine();//fix line bug
 
         //subject
         System.out.println("Enter in new subject. Choices: [Math, Science, English]");
-        owSubject = input.nextLine();
+        owSubject = input.nextLine().toLowerCase();
         if(!(owSubject.toLowerCase().equals("math")||owSubject.toLowerCase().equals("science")||owSubject.toLowerCase().equals("english")))
         {
             System.out.println("Invalid subject entered. Subject defaulted to 'Math'");
@@ -81,7 +84,7 @@ public class Runner
         }
         //hobby
         System.out.println("Enter in new hobby. Choices: [Sports, Music]");
-        owHobby = input.nextLine();
+        owHobby = input.nextLine().toLowerCase();
         if(!(owHobby.toLowerCase().equals("sports")||owHobby.toLowerCase().equals("music")))
         {
             System.out.println("Invalid subject entered. Hobby defaulted to 'Sports'");
@@ -90,11 +93,11 @@ public class Runner
 
         //food
         System.out.println("Enter in new food. Choices: [Pizza, Cookies]");
-        owFood = input.nextLine();
-        if(!(owHobby.toLowerCase().equals("pizza")||owHobby.toLowerCase().equals("cookies")))
+        owFood = input.nextLine().toLowerCase();
+        if(!(owFood.toLowerCase().equals("pizza")|| owFood.toLowerCase().equals("cookies")))
         {
             System.out.println("Invalid subject entered. Hobby defaulted to 'Pizza'");
-            owHobby = "pizza";
+            owFood = "pizza";
         }
     }
 }

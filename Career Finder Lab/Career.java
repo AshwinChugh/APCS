@@ -6,6 +6,7 @@ public class Career//complete
     private String subject;
     private String hobby;
     private String food;
+    private String career;
 
     public Career(String name, int age, String subject, String hobby, String food)//initialize all instance variables
     {
@@ -32,9 +33,9 @@ public class Career//complete
         System.out.println("Subject: "+subject);
         System.out.println("hobby: "+hobby);
         System.out.println("food: "+food);
+        printCareer();
         System.out.println("");//line space
         System.out.println("");
-        printCareer();
     }
 
     private void printCareer()
@@ -46,22 +47,22 @@ public class Career//complete
             {
                 if(this.food.equals("pizza"))
                 {
-                    
+                    career = "Sports Analyzer";
                 }
                 if(this.food.equals("cookies"))
                 {
-                    
+                    career = "Fantasy Sports Player";
                 }
             }
             if(this.hobby.equals("music"))
             {
                 if(this.food.equals("pizza"))
                 {
-                    
+                    career = "Music Composer";
                 }
                 if(this.food.equals("cookies"))
                 {
-                    
+                    career = "Computer Programmer";
                 }
             }
         }
@@ -71,22 +72,22 @@ public class Career//complete
             {
                 if(this.food.equals("pizza"))
                 {
-                    //pizza code here
+                    career = "Intel 360-degree Replay Technology Developer";
                 }
                 if(this.food.equals("cookies"))
                 {
-                    //cookies code here
+                    career = "Mechanical Engineer";
                 }
             }
             if(this.hobby.equals("music"))
             {
                 if(this.food.equals("pizza"))
                 {
-                    //pizza code here
+                    career = "Music Studio Engineer";
                 }
                 if(this.food.equals("cookies"))
                 {
-                    //cookies code here
+                    career = "Music Theorist";
                 }
             }
         }
@@ -96,24 +97,26 @@ public class Career//complete
             {
                 if(this.food.equals("pizza"))
                 {
-                    //pizza code here
+                    career = "Sports Comentator";
                 }
                 if(this.food.equals("cookies"))
                 {
-                    //cookies code here
+                    career = "Sports Journalist";
                 }
             }
             if(this.hobby.equals("music"))
             {
                 if(this.food.equals("pizza"))
                 {
-                    //pizza code here
+                    career = "Songwriter";
                 }
                 if(this.food.equals("cookies"))
                 {
-                    //cookies code here
+                    career = "Celebrity Journalist";
                 }
             }
         }
+
+        System.out.println("Potential Career: "+career);
     }
 }
