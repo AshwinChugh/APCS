@@ -1,11 +1,9 @@
 import java.util.Scanner;
 
-import javax.lang.model.util.ElementScanner6;
-
 public class Runner
 {
 
-    //profiles
+    //profiles -- instantiated profiles of career class declared as global variables(so I can access them from any function)
     private static Career p1 = new Career("john smith", 28, "science", "music", "cookies");
     private static Career p2 = new Career("adam levington", 34, "math", "sports", "pizza");
     private static Career p3 = new Career("lucy lemon", 26, "english", "music", "pizza");
@@ -25,7 +23,7 @@ public class Runner
 
     public static void main(String[] args)
     {
-        while(true)
+        while(true)//continously loop
         {
             if(running)
                 startUserProgram();
@@ -66,7 +64,7 @@ public class Runner
         }
     }
 
-    private static void setOWInfo()//get input for all subjects
+    private static void setOWInfo()//get input for all subjects -- setOverWriteInfo 
     {
         System.out.println("Enter in new name: ");
         owName = input.nextLine().toLowerCase();
