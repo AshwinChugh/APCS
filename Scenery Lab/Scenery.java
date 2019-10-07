@@ -145,7 +145,7 @@ public class Scenery extends JPanel
         }
     }
 
-    private static void setStars(Graphics g)
+    private static void setStars(Graphics g)//not complete atm
     {
         //range of distance between each star
         int maxPosition = 50;
@@ -174,7 +174,7 @@ public class Scenery extends JPanel
         }
     }
 
-    private static void setClouds(Graphics g)
+    private static void setClouds(Graphics g)//cloud class was made bc i wanted to use structs but oracle doesn't really know what they are doing so i had to suffer with a class :/
     {
         Clouds Cloud1 = new Clouds(150, 25, 50, 50);
         Clouds Cloud2 = new Clouds(270, 42, 60, 60);
