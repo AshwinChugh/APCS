@@ -57,8 +57,7 @@ public class Scenery extends JPanel
             g.setColor(colorBrown);
             g.fillRect(0, 550, width, 51);
             proceduralGrass(g);
-
-            
+            drawTrees(g);
         }
         else if(!background)//darktime background
         {
@@ -145,6 +144,12 @@ public class Scenery extends JPanel
         }
     }
 
+    private static void drawTrees(Graphics g)
+    {
+        Trees tree1 = new Trees(30, 100, 500, 400);
+        tree1.drawTree(g);
+    }
+
     private static void setStars(Graphics g)//not complete atm
     {
         //range of distance between each star
@@ -223,5 +228,31 @@ class Clouds
         this.y = y;
         this.width = width;
         this.height = height;
+    }
+}
+
+class Trees
+{
+    //for fillOval function
+    private int treeWidth;//width is the width of the tree bark
+    private int treeHeight;//height is height of tree bark
+    private int treeLocationX;
+    private int treeLocationY;
+    private static Color colorBrown = new Color(169, 169, 169);
+
+    public Trees(int treeWidth, int treeHeight, int treeLocationX, int treeLocationY)
+    {
+        this.treeWidth = treeWidth;
+        this.treeHeight = treeHeight;
+        this.treeLocationX = treeLocationX;
+        this.treeLocationY = 500-treeHeight;
+    }
+
+    public void drawTree(Graphics g)
+    {
+        g.setColor(colorBrown);
+        g.fillRect(treeLocationX, treeLocationY, treeWidth, treeHeight);
+        g.setColor(Color.GREEN);
+        g.fillOval((treeLocationX - (treeWidth-10/2)), (treeLocationY-(treeHeight/2))+10, (treeWidth+treeHeight+20)/2, (treeWidth+treeHeight+20)/2);
     }
 }
