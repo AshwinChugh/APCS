@@ -38,12 +38,33 @@ public class Scenery extends JPanel
     {
         super.paintComponent(g);
         drawBackground(g);
+        drawHouse(g);
+        proceduralGrass(g);
+        drawTrees(g);
         drawSky(g);
-        drawHouses(g);
     }
 
-    private static void drawHouses(Graphics g)
+    private static void drawHouse(Graphics g)
     {
+        //house -- 4th object
+        g.setColor(Color.WHITE);
+        g.fillRect(10, 200, 150, 300);
+        g.setColor(colorBrown);
+        g.fillRect(50, 380, 70, 100);
+        g.setColor(colorBlue);
+        g.fillRect(20, 250, 50, 50);
+        g.fillRect(100, 250, 50, 50);
+
+        //fence -- 5th object
+        g.setColor(colorBrown);
+        g.fillRect(160, 425, 290, 5);
+        g.fillRect(200, 425, 5, 75);
+        g.fillRect(240, 425, 5, 75);
+        g.fillRect(280, 425, 5, 75);
+        g.fillRect(320, 425, 5, 75);
+        g.fillRect(360, 425, 5, 75);
+        g.fillRect(400, 425, 5, 75);
+        g.fillRect(440, 425, 5, 75);
 
     }
     private static void drawBackground(Graphics g)
@@ -53,11 +74,9 @@ public class Scenery extends JPanel
             g.setColor(colorBlue);
             g.fillRect(0,0, width, height);
             g.setColor(colorGreen);
-            g.fillRect(0, 500, width, 101);
+            g.fillRect(0, 500, width, 101);//500-550 is the grass
             g.setColor(colorBrown);
             g.fillRect(0, 550, width, 51);
-            proceduralGrass(g);
-            drawTrees(g);
         }
         else if(!background)//darktime background
         {
@@ -67,9 +86,7 @@ public class Scenery extends JPanel
             g.fillRect(0, 500, width, 100);
             g.setColor(colorBrown);
             g.fillRect(0, 550, width, 51);
-            proceduralGrass(g);
         }
-        
     }
 
     private static void proceduralGrass(Graphics g)//challenge done here
@@ -86,7 +103,7 @@ public class Scenery extends JPanel
 
         g.setColor(colorDarkGreen);
 
-        for(int i=0; i<15; i++)//draws 15 procedurally generated grass petals
+        for(int i=0; i<700; i++)//draws 700 procedurally generated grass blades
         {
             int grassPositionX = (int)(Math.random()*range)+ minPosition;
             int grassSizeX = (int)(Math.random()*rangeSize)+minSize;
@@ -97,7 +114,6 @@ public class Scenery extends JPanel
             minPosition += grassPositionX;//increment distance
             if(minPosition > 800)//ensure it stays in bounds of drawable window
                 minPosition=0;
-            
         }
     }
 
@@ -118,7 +134,7 @@ public class Scenery extends JPanel
                 g.fillOval(20,20,70,70);//moon
                 g.setColor(colorDarkGray);
                 g.fillOval(40,40,30,30);
-                setStars(g);
+                //setStars(g);
             }
 
         }
@@ -139,44 +155,19 @@ public class Scenery extends JPanel
                 g.setColor(colorDarkGray);
                 g.fillOval(40,40,30,30);
                 setClouds(g);
-                setStars(g);
+                //setStars(g);
             }
         }
     }
 
     private static void drawTrees(Graphics g)
     {
-        Trees tree1 = new Trees(30, 100, 500, 400);
+        Trees tree1 = new Trees(500);
+        Trees tree2 = new Trees(600);
+        Trees tree3 = new Trees(700);
         tree1.drawTree(g);
-    }
-
-    private static void setStars(Graphics g)//not complete atm
-    {
-        //range of distance between each star
-        int maxPosition = 50;
-        int minPosition = 20;
-        int range = maxPosition-minPosition +1;
-
-        //size of each star
-        int maxSize = 20;
-        int minSize = 10;
-        int rangeSize = maxSize-minSize +1;
-
-        g.setColor(colorDarkGreen);
-
-        for(int i=0; i<15; i++)//draws 15 procedurally generated grass petals
-        {
-            int grassPositionX = (int)(Math.random()*range)+ minPosition;
-            int grassSizeX = (int)(Math.random()*rangeSize)+minSize;
-            int grassSizeY = (int)(Math.random()*rangeSize)+minSize;
-            
-            g.fillRect(grassPositionX, 500-grassSizeY, grassSizeX, grassSizeY);//draw randomly spaced and sized grass
-
-            minPosition += grassPositionX;//increment distance
-            if(minPosition > 800)//ensure it stays in bounds of drawable window
-                minPosition=0;
-            
-        }
+        tree2.drawTree(g);
+        tree3.drawTree(g);
     }
 
     private static void setClouds(Graphics g)//cloud class was made bc i wanted to use structs but oracle doesn't really know what they are doing so i had to suffer with a class :/
@@ -231,19 +222,27 @@ class Clouds
     }
 }
 
-class Trees
+class Trees//math is a little broken if you use different dimensions -- i might fix this later if i get the motivation to
 {
     //for fillOval function
     private int treeWidth;//width is the width of the tree bark
     private int treeHeight;//height is height of tree bark
     private int treeLocationX;
     private int treeLocationY;
-    private static Color colorBrown = new Color(169, 169, 169);
+    private static Color colorBrown = new Color(139, 69, 19);
 
-    public Trees(int treeWidth, int treeHeight, int treeLocationX, int treeLocationY)
+    public Trees(int treeWidth, int treeHeight, int treeLocationX)//use if you want to change tree size although math doesnt properly scale the trees
     {
         this.treeWidth = treeWidth;
         this.treeHeight = treeHeight;
+        this.treeLocationX = treeLocationX;
+        this.treeLocationY = 500-treeHeight;
+    }
+
+    public Trees(int treeLocationX)//simpler version -- set scaled trees enabled for procedural generation
+    {
+        this.treeWidth = 45;
+        this.treeHeight = 200;
         this.treeLocationX = treeLocationX;
         this.treeLocationY = 500-treeHeight;
     }

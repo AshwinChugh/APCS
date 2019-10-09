@@ -9,7 +9,7 @@ public class Runner
 
     public static void main(String[] args)
     {
-        setScenerySettings();//set proper settings
+        setScenerySettings();//set proper settingsn
 
         Scenery scenery = new Scenery(backgroundDay, skyClear);
         
