@@ -6,7 +6,6 @@ public class Runner
     private static boolean backgroundDay;
     private static boolean skyClear;
     private static Scanner userInput = new Scanner(System.in);
-
     public static void main(String[] args)
     {
         setScenerySettings();//set proper settingsn
