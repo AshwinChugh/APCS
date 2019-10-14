@@ -126,7 +126,12 @@ public class FormulasGraphics extends JPanel implements ActionListener {
         g.setColor(Color.GREEN);
         g.fillRect(20,20, 760, 540);
         g.setColor(colorDarkBrown);
-        g.fillRect(20,540, 800, 20);
+        g.fillRect(20,540, 760, 20);
+        g.setColor(Color.BLACK);
+        g.fillRect(340, 520, 70, 20);
+        g.setColor(Color.WHITE);
+        g.fillRect(600, 530, 50, 10);
+        g.fillRect(145, 530, 50, 10);
 
         g.setColor(Color.RED);
         g.drawString("Quadratic Formula", 50, 20);
