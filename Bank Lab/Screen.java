@@ -17,6 +17,7 @@ public class Screen extends JPanel implements ActionListener
 
     //create and fill array for all users
     private Bank[] userArray = new Bank[]{_john, _jen, _jerry};//create and fill array
+    private Bank _user;//this is for the challenge of choosing any person
 
     //pin related 
     private JButton checkPinButton;
@@ -97,29 +98,45 @@ public class Screen extends JPanel implements ActionListener
     {
         if(e.getSource() == checkPinButton)
         {
-            _john.checkPin(Integer.parseInt(pinInput.getText()));
-            if(!_john.getAccess())
+            for(int i=0; i< userArray.length; i++)//loop through the userArray to check if the pin entered matches any of their pins
+            {
+                userArray[i].checkPin(Integer.parseInt(pinInput.getText()));
+                if(userArray[i].getAccess())//check if the pin matches anything
+                {
+                    _user = userArray[i];
+                    break;
+                }
+                    
+            }  
+        }
+
+        if(e.getSource() == withdrawButton)
+        {
+            if(_user.getAccess())
+            {
+                _user.withdraw(Double.parseDouble(amountInput.getText()));//withdraw the amount specified in the textbox
+            }
+        }
+
+        if(e.getSource() == depositButton)
+        {
+            if(_user.getAccess())
+            {
+                _user.deposit(Double.parseDouble(amountInput.getText()));//deposity the amount specified in the textbox
+            }
+        }
+        
+        //updates everytime
+        if(!_user.getAccess())
             {
                 pinStatus = "Invalid Pin Entered!";
             }
-            if(_john.getAccess())
+            if(_user.getAccess())
             {
                 pinStatus = "Correct Pin. Access Granted!";
-                userName = "Welcome, "+ _john.getName() + "!";
-                userBalance = "Balance: "+ Double.toString(_john.getBalance());
-            }   
-        }
-        if(e.getSource() == withdrawButton)
-        {
-            if(_john.getAccess())
-            {
-                
-            }
-        }
-        if(e.getSource() == depositButton)
-        {
-            System.out.println("deposit");
-        }
+                userName = "Welcome, "+ _user.getName() + "!";
+                userBalance = "Balance: "+ Double.toString(_user.getBalance());
+            } 
         repaint();//refresh screen
     }
 
