@@ -23,12 +23,14 @@ public class Screen extends JPanel implements ActionListener
     private JButton checkPinButton;
     private JTextField pinInput;
     private String pinStatus = "";
+    private boolean loggedIn=false;
 
     //withdraw and deposit functionality
     private String amountText = "Enter the amount you would like to withdraw or deposit";
     private JTextField amountInput;
     private JButton withdrawButton;
     private JButton depositButton;
+    private String noWithdrawText = "test";
 
     //general information panel
     private String infoPanelTitle = "User Information";
@@ -80,10 +82,11 @@ public class Screen extends JPanel implements ActionListener
     {
         super.paintComponent(g);
 
+
         //pin related
         g.setColor(Color.BLACK);
         g.drawString("Enter Pin", 50, 45);
-        g.drawString(pinStatus, 50, 125);
+        g.drawString(pinStatus, 50, 130);
 
         //general info
         g.drawString(infoPanelTitle, 650, 40);
@@ -92,6 +95,7 @@ public class Screen extends JPanel implements ActionListener
 
         //withdraw and deposit
         g.drawString(amountText, 250, 280);
+        g.drawString(noWithdrawText, 300, 250);
     }
 
     public void actionPerformed(ActionEvent e)
@@ -103,40 +107,66 @@ public class Screen extends JPanel implements ActionListener
                 userArray[i].checkPin(Integer.parseInt(pinInput.getText()));
                 if(userArray[i].getAccess())//check if the pin matches anything
                 {
+                    loggedIn = true;
                     _user = userArray[i];
                     break;
                 }
-                    
-            }  
+            }
         }
 
         if(e.getSource() == withdrawButton)
         {
-            if(_user.getAccess())
+            if(loggedIn)
             {
-                _user.withdraw(Double.parseDouble(amountInput.getText()));//withdraw the amount specified in the textbox
+                if(_user.getAccess())
+                {
+                    if((_user.getBalance() - Double.parseDouble(amountInput.getText())) < 0)//checks if the user can withdraw the amount specified
+                    {
+                        noWithdrawText = "You do not have enough money in your account to withdraw this amount.";
+                    }
+                    else
+                    {
+                        noWithdrawText = "";//clear the text or keep it clear if the user has enough money
+                        _user.withdraw(Double.parseDouble(amountInput.getText()));//withdraw the amount specified in the textbox
+                    }
+                }
+                else
+                {
+                    System.out.println("no access");
+                }
             }
         }
 
         if(e.getSource() == depositButton)
         {
-            if(_user.getAccess())
+            if(loggedIn)
             {
-                _user.deposit(Double.parseDouble(amountInput.getText()));//deposity the amount specified in the textbox
+                if(_user.getAccess())
+                {
+                    _user.deposit(Double.parseDouble(amountInput.getText()));//deposity the amount specified in the textbox
+                }
+                else
+                {
+                    System.out.println("no access");
+                }
             }
         }
         
         //updates everytime
-        if(!_user.getAccess())
-            {
+        if(!loggedIn)
+        {
                 pinStatus = "Invalid Pin Entered!";
-            }
+        }
+
+        if(loggedIn)
+        {
             if(_user.getAccess())
             {
                 pinStatus = "Correct Pin. Access Granted!";
                 userName = "Welcome, "+ _user.getName() + "!";
                 userBalance = "Balance: "+ Double.toString(_user.getBalance());
-            } 
+            }
+        } 
         repaint();//refresh screen
     }
 
