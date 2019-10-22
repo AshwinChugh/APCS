@@ -6,6 +6,12 @@ import java.awt.Graphics;
 import java.awt.event.ActionListener;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 
 
 public class Screen extends JPanel implements ActionListener
@@ -30,13 +36,24 @@ public class Screen extends JPanel implements ActionListener
     private JTextField amountInput;
     private JButton withdrawButton;
     private JButton depositButton;
-    private String noWithdrawText = "test";
+    private String noWithdrawText = "";
 
     //general information panel
     private String infoPanelTitle = "User Information";
     private String userName = "";
     private String userBalance = "";
+
+    //name update
+    private String nameTextField = "Update Name";//Update name here 
+    private JTextField nameChanger;
+    private JButton nameChangeButton;
+
+    //background image
+    private BufferedImage image;
     
+
+    //sign out
+    private JButton signOut;
 
     public Screen()
     {
@@ -67,6 +84,30 @@ public class Screen extends JPanel implements ActionListener
         add(depositButton);
         depositButton.addActionListener(this);
 
+        //name
+        nameChangeButton = new JButton("Update Name");
+        nameChangeButton.setBounds(300, 200, 150, 30);
+        add(nameChangeButton);
+        nameChangeButton.addActionListener(this);
+        nameChanger = new JTextField();
+        nameChanger.setBounds(280, 160, 200, 30);
+        add(nameChanger);
+
+        //sign out
+        signOut = new JButton("Sign Out");
+        signOut.setBounds(330, 500, 100, 30);
+        add(signOut);
+        signOut.addActionListener(this);
+
+        //background image
+        try 
+        {                
+            image = ImageIO.read(new File("[your absolute path here]\\Bank Lab\\background.png"));
+        } catch (IOException ex) 
+       {
+            System.out.println("Unable to draw image :(");
+            System.out.println(ex);
+       }
 
         setFocusable(true);
     }
@@ -82,7 +123,8 @@ public class Screen extends JPanel implements ActionListener
     {
         super.paintComponent(g);
 
-
+        //image
+        g.drawImage(image, 0, 0, this);
         //pin related
         g.setColor(Color.BLACK);
         g.drawString("Enter Pin", 50, 45);
@@ -96,6 +138,9 @@ public class Screen extends JPanel implements ActionListener
         //withdraw and deposit
         g.drawString(amountText, 250, 280);
         g.drawString(noWithdrawText, 300, 250);
+
+        //name
+        g.drawString(nameTextField, 200, 170);
     }
 
     public void actionPerformed(ActionEvent e)
@@ -144,10 +189,30 @@ public class Screen extends JPanel implements ActionListener
                 if(_user.getAccess())
                 {
                     _user.deposit(Double.parseDouble(amountInput.getText()));//deposity the amount specified in the textbox
+                    //System.out.println("test"); --> for debugging purposes 
                 }
-                else
+            }
+        }
+
+        if(e.getSource() == nameChangeButton)
+        {
+            if(loggedIn)
+            {
+                if(_user.getAccess())
                 {
-                    System.out.println("no access");
+                    _user.updateName(nameChanger.getText());//update the name
+                    //System.out.println("Name updated: "+_user.getName());  --> for debugging purposes 
+                }
+            }
+        }
+
+        if(e.getSource() == signOut)
+        {
+            if(loggedIn)
+            {
+                if(_user.getAccess())
+                {
+                    _user.disableAccess();
                 }
             }
         }
