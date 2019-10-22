@@ -101,8 +101,8 @@ public class Screen extends JPanel implements ActionListener
 
         //background image
         try 
-        {                
-            image = ImageIO.read(new File("[your absolute path here]\\Bank Lab\\background.png"));
+        {   
+            image = ImageIO.read(getClass().getClassLoader().getResourceAsStream("background.png"));
         } catch (IOException ex) 
        {
             System.out.println("Unable to draw image :(");
@@ -174,10 +174,6 @@ public class Screen extends JPanel implements ActionListener
                         noWithdrawText = "";//clear the text or keep it clear if the user has enough money
                         _user.withdraw(Double.parseDouble(amountInput.getText()));//withdraw the amount specified in the textbox
                     }
-                }
-                else
-                {
-                    System.out.println("no access");
                 }
             }
         }
