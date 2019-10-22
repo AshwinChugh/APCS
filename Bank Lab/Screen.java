@@ -102,7 +102,7 @@ public class Screen extends JPanel implements ActionListener
         //background image
         try 
         {   
-            image = ImageIO.read(getClass().getClassLoader().getResourceAsStream("background.png"));
+            image = ImageIO.read(getClass().getClassLoader().getResourceAsStream("background.png"));//universal image reader
         } catch (IOException ex) 
        {
             System.out.println("Unable to draw image :(");
