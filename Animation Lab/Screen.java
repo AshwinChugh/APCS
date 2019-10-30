@@ -14,13 +14,11 @@ public class Screen extends JPanel
     int sunY;
     int sunX;
     int inSunY = sunY + 20;
-    private double sunXDeg;
-    private double sunYDeg;
+    private double sunDeg;
 
     int moonY;
     int moonX;
-    private double moonYDeg = 180;
-    private double moonXDeg = 180;
+    private double moonDeg = 180;
 
     //Colors
     Color yellow = new Color(255, 255, 0);
@@ -61,7 +59,7 @@ public class Screen extends JPanel
     {
         super.paintComponent(g);
 
-        if(sunYDeg >= 0 && sunXDeg <= 180)//night code
+        if(sunDeg >= 0 && sunDeg <= 180)//night code
         {
             g.setColor(Color.BLACK);
             g.fillRect(0, 0, 800, 600);
@@ -165,19 +163,16 @@ public class Screen extends JPanel
             cloudX3%=800;
             cloudX4%=800;
 
-            sunYDeg++;
-            sunXDeg++;
-            sunY = (int)((Math.sin(Math.toRadians(sunYDeg))*500)+500);
-            sunX = (int)((Math.cos(Math.toRadians(sunXDeg))*500)+350);
-            sunYDeg%=360;
-            sunXDeg%=360;
+
+            sunDeg++;
+            sunY = (int)((Math.sin(Math.toRadians(sunDeg))*500)+500);
+            sunX = (int)((Math.cos(Math.toRadians(sunDeg))*500)+350);
+            sunDeg%=360;
             
-            moonYDeg++;
-            moonXDeg++;
-            moonY = (int)((Math.sin(Math.toRadians(moonYDeg))*500)+500);
-            moonX = (int)((Math.cos(Math.toRadians(moonXDeg))*500)+350);
-            moonXDeg%=360;
-            moonYDeg%=360;
+            moonDeg++;
+            moonY = (int)((Math.sin(Math.toRadians(moonDeg))*500)+500);
+            moonX = (int)((Math.cos(Math.toRadians(moonDeg))*500)+350);
+            moonDeg%=360;
 
 
             if(ufoDown && ufoPosY <= 450)//bring the ufo down
