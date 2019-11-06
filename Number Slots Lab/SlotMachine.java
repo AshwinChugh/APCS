@@ -1,4 +1,7 @@
 import java.awt.Graphics;
+
+import javax.lang.model.util.ElementScanner6;
+
 import java.awt.Color;
 import java.awt.Font;
 
@@ -11,6 +14,8 @@ public class SlotMachine
     int balance;
     int oldBalance;
     int bet;
+
+    private int winType = 0;//0 --> no win | 1 --> 2 numbers | 2 --> 3 numbers all same | 3 --> all 7s
 
     public SlotMachine() 
     {
@@ -48,9 +53,17 @@ public class SlotMachine
         {
             g.drawString("YOU WON: 0", 150, 135);
         }
+        else if(winType == 1)
+        {
+            g.drawString("YOU WON: " + 2*bet, 150, 135);
+        }
+        else if(winType == 2)
+        {
+            g.drawString("YOU WON: " + 5*bet, 150, 135);
+        }
         else
         {
-            g.drawString("YOU WON: " + (balance - oldBalance)*bet, 150, 135);
+            g.drawString("YOU WON: " + 100*bet, 150, 135);
         }
             
     }
@@ -67,12 +80,15 @@ public class SlotMachine
             if (num1 == 7 && num2 == 7 && num3 == 7)
             {
                 balance += 100 * bet;
+                winType = 3;
             } else if (num1 == num2 && num2 == num3)
             {
                 balance += 5 * bet;
+                winType = 2;
             } else if (num1 == num2 || num2 == num3 || num1 == num3)
             {
                 balance += 2 * bet;
+                winType = 1;
             }
         }
     }
