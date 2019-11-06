@@ -77,8 +77,5 @@ public class SlotMachine
         }
     }
 
-    public void setBet(int in)
-    {
-        bet = in;
-    }
+    public void setBet(int in){ bet = in; }
 }
