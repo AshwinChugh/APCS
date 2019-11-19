@@ -105,11 +105,13 @@ public class Scenery extends JPanel implements ActionListener {
 
         g.setColor(skyBlue);
         g.fillRect(0, 0, 800, 300);
-        g.setColor(dirtBrown);
+        g.setColor(Color.white);
         g.fillRect(0, 300, 800, 300);
         if (!isWinter) {
             g.setColor(sun);
             g.fillOval(50, 50, 100, 100);
+            g.setColor(dirtBrown);
+            g.fillRect(0, 300, 800, 300);
         }
         for (int i = 0; i < mountains.length; i++) {
             mountains[i].drawMe(g, isWinter);
@@ -117,9 +119,13 @@ public class Scenery extends JPanel implements ActionListener {
         for (int i = 0; i < trees.length; i++) {
             trees[i].drawMe(g, isWinter, isFall);
         }
-        for (int i = 0; i < rain.length; i++) {
-            rain[i].drawMe(g, isWinter);
+        if(isWinter || isSpring)
+        {
+            for (int i = 0; i < rain.length; i++) {
+                rain[i].drawMe(g, isWinter);
+            }   
         }
+        
 
         if (isFall || isSpring) {
             Color offwhite = new Color(220, 240, 255);
