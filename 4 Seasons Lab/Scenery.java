@@ -61,7 +61,7 @@ public class Scenery extends JPanel implements ActionListener {
         }
 
         // birds
-        birds = new double[100][4];
+        birds = new double[10][4];
         for (int i = 0; i < birds.length; i++) {
             birds[i][0] = Math.random() * 800;
             birds[i][1] = Math.random() * 600;
