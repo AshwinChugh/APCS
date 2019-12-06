@@ -175,13 +175,13 @@ public class Screen extends JPanel
             moonDeg%=360;
 
 
-            if(ufoDown && ufoPosY <= 450)//bring the ufo down
+            if(ufoDown && ufoPosY <= 450)//bring the ufo up
             {
                 ufoPosY+=1;
                 if(ufoPosY == 450)
                     ufoDown = false;
             }
-            else if(!ufoDown)//bring the ufo up
+            else if(!ufoDown)//bring the ufo down
             {
                 ufoPosY-=1;
                 if(ufoPosY == 300)
