@@ -7,15 +7,14 @@ public class Projectile {
     private Color color;
     private boolean visibility;
     private boolean dead;
-    public Projectile(int x, int y, boolean g){
+    public Projectile(int x, int y){
         this.dead = true;
         this.x = x;
         this.y = y;
-        this.width = 20;
-        this.height = 20;
+        this.width = 10;
+        this.height = 10;
         this.visibility = false;
-        if (g) this.color = new Color(0,0,0);
-        else this.color = new Color(128, 0, 0);
+        this.color = new Color(128,0,0);
     }
     
     public void checkCollision (Projectile enemy) {
@@ -32,7 +31,7 @@ public class Projectile {
     public void moveUp(){
         if(visibility)
         {
-            y-=5;
+            y-=10;
             if(y <=0)
             {
                 visibility = false;

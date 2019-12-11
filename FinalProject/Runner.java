@@ -5,7 +5,7 @@ public class Runner {
    
     public static void main(String[] args) {
  
-        JFrame frame = new JFrame("Circle");
+        JFrame frame = new JFrame("Zombie Shooter");
  
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
  

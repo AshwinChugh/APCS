@@ -11,17 +11,14 @@ import javax.imageio.ImageIO;
 import java.awt.Image;
  
 public class Fighter{
-    private int x;
-    private int y;
+    private int x,y,lives,width,height;
     private boolean dead = false;
     private BufferedImage player;
-    private int width;
-    private int height;
      
     private Color color;
      
     public Fighter(int x, int y){
-         
+        this.lives = 3;
         this.x = x;
         this.y = y;
         this.width = 50;
@@ -47,9 +44,8 @@ public class Fighter{
     public boolean getDead() {return dead;}
     public void setDead(boolean bool) {dead=bool;}
     public void drawMe(Graphics g) {
-        // g.setColor(Color.GREEN);
-        // g.fillRect(x, y, 25, 25);
-        g.drawImage(player, x, y, null);
+        if(!dead)
+            g.drawImage(player, x, y, null);
     }
      
     public void moveRight(){

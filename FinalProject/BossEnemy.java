@@ -10,24 +10,25 @@ import java.io.IOException;
 import java.awt.Image;
 import java.awt.Graphics2D;
 
-public class Enemy {
-    private int x, y, width, height;
-    private Color color;
+public class BossEnemy {
+    private int x, y, width, height, hits;
+    //private Color color;
     private boolean dead = false;
-    private BufferedImage zombie;
+    private BufferedImage bossZombie;
     private boolean moveLeft;
     private int speed;
 
-    public Enemy(int x, int y){
+    public BossEnemy(int x, int y){
         this.x = x;
         this.y = y;
-        this.width = 40;
-        this.height = 40;
-        this.color = new Color(255,0,0);
-        this.speed = 0;//initialize to some value
+        this.width = 80;
+        this.height = 80;
+        this.hits = 0;
+        //this.color = new Color(255,0,0);
+        this.speed = 50;//set to an insane speed
         moveLeft = false;
         try{
-            zombie = resize(ImageIO.read(new File("Enemy.png")), 50, 50);
+            bossZombie = resize(ImageIO.read(new File("BossEnemy.png")), 80, 80);
         }
         catch(IOException e)
         {
@@ -38,8 +39,13 @@ public class Enemy {
 
     public void checkCollision(Projectile p)
     {
-        if (x+width >= p.getX() && x <= p.getX() + p.getWidth()  && y+height >= p.getY() && y <= p.getY() + p.getHeight()) dead = true;
-        else if (x+width >= p.getX() && x <= p.getX() + p.getWidth()  && y+height >= p.getY() && y <= p.getY() + p.getHeight()) dead = true;
+        if (x+width >= p.getX() && x <= p.getX() + p.getWidth()  && y+height >= p.getY() && y <= p.getY() + p.getHeight()) hits++;
+        else if (x+width >= p.getX() && x <= p.getX() + p.getWidth()  && y+height >= p.getY() && y <= p.getY() + p.getHeight()) hits++;
+        
+        if(hits > 4)
+        {
+            this.dead = true;
+        }
     }
 
     public void checkCollision(Fighter f)
@@ -58,36 +64,30 @@ public class Enemy {
     public void setDead(boolean dead){this.dead = dead;}
     public void drawMe(Graphics g) {
         if (!dead) {
-            g.drawImage(zombie, x, y, null);
+            g.drawImage(bossZombie, x, y, null);
         }
     }
 
     public void move()
     {
-        if(!(y >= 500))
+        if(!moveLeft)
         {
-            if(!moveLeft)
+            moveRight();
+            if(x >= 750)
             {
-                moveRight();
-                if(x >= 750)
-                {
-                    moveLeft = true;
-                    moveDown();
-                }
+                moveLeft = true;
+                moveDown();
             }
-            if(moveLeft)
-            {
-                moveLeft();
-                if(x <= 0)
-                {
-                    moveLeft = false;
-                    moveDown();
-                }    
-            }   
         }
-        else
+        if(moveLeft)
         {
-            this.dead = true;
+            moveLeft();
+            if(x <= 0)
+            {
+                moveLeft = false;
+                moveDown();
+            }
+                
         }
     }
 
