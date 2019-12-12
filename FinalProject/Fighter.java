@@ -49,7 +49,7 @@ public class Fighter{
     }
      
     public void moveRight(){
-        if (x<=600) x += 5;
+        if (x<=750) x += 5;
     }
      
     public void moveLeft(){

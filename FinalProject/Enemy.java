@@ -14,6 +14,7 @@ public class Enemy {
     private int x, y, width, height;
     private Color color;
     private boolean dead = false;
+    public boolean scoreCount = false;
     private BufferedImage zombie;
     private boolean moveLeft;
     private int speed;
@@ -44,8 +45,23 @@ public class Enemy {
 
     public void checkCollision(Fighter f)
     {
-        if (x+width >= f.getX() && x <= f.getX() + f.getWidth()  && y+height >= f.getY() && y <= f.getY() + f.getHeight()) f.setDead(true);
-        else if (x+width >= f.getX() && x <= f.getX() + f.getWidth()  && y+height >= f.getY() && y <= f.getY() + f.getHeight()) f.setDead(true);
+        if (x+width >= f.getX() && x <= f.getX() + f.getWidth()  && y+height >= f.getY() && y <= f.getY() + f.getHeight()) 
+        {
+            if(!this.dead)
+            {
+                f.setDead(true);
+                this.dead = true;
+            }
+                
+        }
+        else if (x+width >= f.getX() && x <= f.getX() + f.getWidth()  && y+height >= f.getY() && y <= f.getY() + f.getHeight())
+        {
+            if(!this.dead)
+            {
+                f.setDead(true);
+                this.dead = true;
+            }
+        } 
     }
 
     public boolean getDead() {return dead;}

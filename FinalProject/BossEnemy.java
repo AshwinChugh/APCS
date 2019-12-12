@@ -13,7 +13,7 @@ import java.awt.Graphics2D;
 public class BossEnemy {
     private int x, y, width, height, hits;
     //private Color color;
-    private boolean dead = false;
+    private boolean dead = true;
     private BufferedImage bossZombie;
     private boolean moveLeft;
     private int speed;
@@ -21,14 +21,14 @@ public class BossEnemy {
     public BossEnemy(int x, int y){
         this.x = x;
         this.y = y;
-        this.width = 80;
-        this.height = 80;
+        this.width = 200;
+        this.height = 200;
         this.hits = 0;
         //this.color = new Color(255,0,0);
         this.speed = 50;//set to an insane speed
         moveLeft = false;
         try{
-            bossZombie = resize(ImageIO.read(new File("BossEnemy.png")), 80, 80);
+            bossZombie = resize(ImageIO.read(new File("BossEnemy.png")), 200, 200);
         }
         catch(IOException e)
         {
