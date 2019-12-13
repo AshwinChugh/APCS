@@ -3,10 +3,7 @@ import java.awt.event.KeyListener;
 import java.awt.Graphics;
 import java.awt.Color;
 import javax.swing.JPanel;
-import java.net.URL;
 import java.util.logging.Level;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -108,6 +105,7 @@ public class Screen extends JPanel implements KeyListener {
                     enemies[i].setDead(true);
                 }
                 BE.setSpeed(5);//slow moving because big
+                level3Setup = false;//ensure we only set up the level once
             }
         }
 
@@ -119,6 +117,8 @@ public class Screen extends JPanel implements KeyListener {
         
         BE.drawMe(g);//boss enemy draw function --> only draws on level 3
 
+
+        //display the current level, score, and lives on the screen
         g.drawString("Level: "+Integer.toString(level), 300, 20);
         g.drawString("Score: "+Integer.toString(score), 300, 40);
         g.drawString("Lives: "+Integer.toString(lives), 300, 60);
@@ -152,7 +152,7 @@ public class Screen extends JPanel implements KeyListener {
                     enemies[i].move();
                     if(enemies[i].getDead())
                     {
-                        if(!enemies[i].scoreCount)
+                        if(!enemies[i].scoreCount)//make sure we are only counting each enemy just once 
                         {
                             total++;
                             //System.out.println(total);
@@ -188,7 +188,7 @@ public class Screen extends JPanel implements KeyListener {
                                 enemies[i].setDead(false);//spawn the enemies again
                                 enemies[i].setSpeed(10);//move the enemies faster and make the level harder
                                 enemies[i].scoreCount = false;//allow the enemies to be killed and added to the score
-                                total = 0;//reset the level total count
+                                total = 0;//reset the total count so the player doesn't move onto the next level without killing all 5 enemies
                             }
                             level = 1;//ensure the game doesn't move on to the next level for any reason
                         }
@@ -217,8 +217,11 @@ public class Screen extends JPanel implements KeyListener {
             else
             {
                 BE.move();
-                BE.checkCollision(f1);
-                BE.checkCollision(p1);
+                if(!BE.getDead())
+                {
+                    BE.checkCollision(f1);
+                    BE.checkCollision(p1);
+                }
             }
             
 
@@ -234,7 +237,6 @@ public class Screen extends JPanel implements KeyListener {
         if (code == 39) f1.moveRight();
         if (code==32) {
             p1.setPosition(f1.getX()+23, f1.getY());//so it looks like the main player is shooting from his gun rather than his shoulder
-            playLaserSound();//play the shooting sound whenever the user fires the laser
         }
         if(code == 80)//cheat key(p)
             level++;
@@ -265,16 +267,4 @@ public class Screen extends JPanel implements KeyListener {
     
         return dimg;
     } 
-
-    private void playLaserSound() {//plays laser sound
- 
-        try {
-            URL url = this.getClass().getClassLoader().getResource("Sound/laser.wav");
-            Clip clip = AudioSystem.getClip();
-            clip.open(AudioSystem.getAudioInputStream(url));
-            clip.start();
-        } catch (Exception exc) {
-            exc.printStackTrace(System.out);
-        }
-    }
 }

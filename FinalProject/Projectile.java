@@ -1,5 +1,8 @@
 import java.awt.Graphics;
 import java.awt.Color;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import java.net.URL;
 
 public class Projectile {
     private double x, y;
@@ -52,7 +55,7 @@ public class Projectile {
     public void setPosition(int x, int y) {
         dead=false;
         if (!visibility) {
-            //this.playSound();
+            playLaserSound();//play the shooting sound whenever the user fires the laser
             visibility=true;
             this.x = x;
             this.y = y;
@@ -64,4 +67,16 @@ public class Projectile {
     public int getWidth() {return width;}
     public int getHeight() {return height;}
     public void setVisibility(boolean value){visibility = value;}
+
+    private void playLaserSound() {//plays laser sound
+ 
+        try {
+            URL url = this.getClass().getClassLoader().getResource("Sound/laser.wav");
+            Clip clip = AudioSystem.getClip();
+            clip.open(AudioSystem.getAudioInputStream(url));
+            clip.start();
+        } catch (Exception exc) {
+            exc.printStackTrace(System.out);
+        }
+    }
 }

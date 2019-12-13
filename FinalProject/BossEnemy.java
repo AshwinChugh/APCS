@@ -49,11 +49,8 @@ public class BossEnemy {
                 hits++;
                 hitStatus = false;
                 p.setVisible(false);
-                System.out.println("HIT");
-                System.out.println("Hit count: "+hits);
+                playHurtSound();//hit but not dead, so we play the hurt sound
             }
-                
-            //System.out.println("HIT");
         }
         else if (x+width >= p.getX() && x <= p.getX() + p.getWidth()  && y+height >= p.getY() && y <= p.getY() + p.getHeight()) {
             if(hitStatus)
@@ -61,19 +58,16 @@ public class BossEnemy {
                 hits++; 
                 hitStatus = false;
                 p.setVisible(false);
-                System.out.println("HIT");
-                System.out.println("Hit Count: "+hits);
+                playHurtSound();//big boss got hit with a projectile but is not dead, so we play the hurt sound
             }
-                
-            //System.out.println("HIT");
         }
         if(!setDead)
         {
             if(hits > 4)//takes 5 hits to kill this boss enemy
             {
                 this.dead = true;
-                System.out.println("Big Boss Dead!");
                 setDead = true;
+                playDeathSound();//the big boss is dead now, so we play the death sound
             }
         }
     }
@@ -96,30 +90,31 @@ public class BossEnemy {
         if (!dead) {
             g.drawImage(bossZombie, x, y, null);
         }
-        if(dead)
-            System.out.println("Not drawing");
     }
 
     public void move()
     {
-        if(!moveLeft)
+        if(!dead)
         {
-            moveRight();
-            if(x >= 400)
+            if(!moveLeft)
             {
-                moveLeft = true;
-                moveDown();
+                moveRight();
+                if(x >= 400)
+                {
+                    moveLeft = true;
+                    moveDown();
+                }
             }
-        }
-        if(moveLeft)
-        {
-            moveLeft();
-            if(x <= 0)
+            if(moveLeft)
             {
-                moveLeft = false;
-                moveDown();
+                moveLeft();
+                if(x <= 0)
+                {
+                    moveLeft = false;
+                    moveDown();
+                }
+                    
             }
-                
         }
     }
 
@@ -143,4 +138,29 @@ public class BossEnemy {
     
         return dimg;
     } 
+
+    private void playHurtSound()
+    {
+        try {
+            URL url = this.getClass().getClassLoader().getResource("Sound/Minecraft-zombiehurt1.wav");
+            Clip clip = AudioSystem.getClip();
+            clip.open(AudioSystem.getAudioInputStream(url));
+            clip.start();
+        } catch (Exception exc) {
+            exc.printStackTrace(System.out);
+        }
+    }
+
+    private void playDeathSound()//plays the death sound when the player kills the zombie
+    {
+        try {
+            URL url = this.getClass().getClassLoader().getResource("Sound/Minecraft-zombiedeath.wav");
+            Clip clip = AudioSystem.getClip();
+            clip.open(AudioSystem.getAudioInputStream(url));
+            clip.start();
+        } catch (Exception exc) {
+            exc.printStackTrace(System.out);
+        }
+    }
+
 }
