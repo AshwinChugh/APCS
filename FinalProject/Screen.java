@@ -32,9 +32,9 @@ public class Screen extends JPanel implements KeyListener {
         level = 1;
         lives = 3;
         try{
-            LevelTwoBackground = resize(ImageIO.read(getClass().getClassLoader().getResourceAsStream("level2background.png")), 800, 600);
-            LevelOneBackground = resize(ImageIO.read(getClass().getClassLoader().getResourceAsStream("level1background.png")), 800, 600);
-            LevelThreeBackground = resize(ImageIO.read(getClass().getClassLoader().getResourceAsStream("level3background.png")), 800, 600); 
+            LevelTwoBackground = resize(ImageIO.read(getClass().getClassLoader().getResourceAsStream("Graphics/level2background.png")), 800, 600);
+            LevelOneBackground = resize(ImageIO.read(getClass().getClassLoader().getResourceAsStream("Graphics/level1background.png")), 800, 600);
+            LevelThreeBackground = resize(ImageIO.read(getClass().getClassLoader().getResourceAsStream("Graphics/level3background.png")), 800, 600); 
         }catch(IOException e){}
         
         //start all players/game elements
@@ -234,6 +234,7 @@ public class Screen extends JPanel implements KeyListener {
         if (code == 39) f1.moveRight();
         if (code==32) {
             p1.setPosition(f1.getX()+23, f1.getY());//so it looks like the main player is shooting from his gun rather than his shoulder
+            playLaserSound();//play the shooting sound whenever the user fires the laser
         }
         if(code == 80)//cheat key(p)
             level++;
@@ -264,4 +265,16 @@ public class Screen extends JPanel implements KeyListener {
     
         return dimg;
     } 
+
+    private void playLaserSound() {//plays laser sound
+ 
+        try {
+            URL url = this.getClass().getClassLoader().getResource("Sound/laser.wav");
+            Clip clip = AudioSystem.getClip();
+            clip.open(AudioSystem.getAudioInputStream(url));
+            clip.start();
+        } catch (Exception exc) {
+            exc.printStackTrace(System.out);
+        }
+    }
 }

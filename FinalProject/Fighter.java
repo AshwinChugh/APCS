@@ -22,7 +22,7 @@ public class Fighter{
         this.width = 50;
         this.height = 50;
         try{
-            player = resize(ImageIO.read(new File("Player.png")), 50, 50); 
+            player = resize(ImageIO.read(new File("Graphics/Player.png")), 50, 50); 
         }catch(IOException e)
         {
             e.printStackTrace();

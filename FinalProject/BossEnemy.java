@@ -13,6 +13,7 @@ import java.awt.Graphics2D;
 public class BossEnemy {
     private int x, y, width, height, hits;
     //private Color color;
+    private boolean setDead = false;//ensures we only make this enemy dead once because checkCollision() is called a bunch of times in screen class
     private boolean dead = true;
     private BufferedImage bossZombie;
     private boolean moveLeft;
@@ -31,7 +32,7 @@ public class BossEnemy {
         this.speed = 50;//set to an insane speed
         moveLeft = false;
         try{
-            bossZombie = resize(ImageIO.read(new File("BossEnemy.png")), 200, 200);
+            bossZombie = resize(ImageIO.read(new File("Graphics/BossEnemy.png")), 200, 200);
         }
         catch(IOException e)
         {
@@ -49,6 +50,7 @@ public class BossEnemy {
                 hitStatus = false;
                 p.setVisible(false);
                 System.out.println("HIT");
+                System.out.println("Hit count: "+hits);
             }
                 
             //System.out.println("HIT");
@@ -60,14 +62,19 @@ public class BossEnemy {
                 hitStatus = false;
                 p.setVisible(false);
                 System.out.println("HIT");
+                System.out.println("Hit Count: "+hits);
             }
                 
             //System.out.println("HIT");
         }
-        
-        if(hits > 4)//takes 5 hits to kill this boss enemy
+        if(!setDead)
         {
-            this.dead = true;
+            if(hits > 4)//takes 5 hits to kill this boss enemy
+            {
+                this.dead = true;
+                System.out.println("Big Boss Dead!");
+                setDead = true;
+            }
         }
     }
 
@@ -89,6 +96,8 @@ public class BossEnemy {
         if (!dead) {
             g.drawImage(bossZombie, x, y, null);
         }
+        if(dead)
+            System.out.println("Not drawing");
     }
 
     public void move()

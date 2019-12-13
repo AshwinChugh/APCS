@@ -28,7 +28,7 @@ public class Enemy {
         this.speed = 0;//initialize to some value
         moveLeft = false;
         try{
-            zombie = resize(ImageIO.read(new File("Enemy.png")), 50, 50);
+            zombie = resize(ImageIO.read(new File("Graphics/Enemy.png")), 50, 50);
         }
         catch(IOException e)
         {
@@ -39,8 +39,14 @@ public class Enemy {
 
     public void checkCollision(Projectile p)
     {
-        if (x+width >= p.getX() && x <= p.getX() + p.getWidth()  && y+height >= p.getY() && y <= p.getY() + p.getHeight()) dead = true;
-        else if (x+width >= p.getX() && x <= p.getX() + p.getWidth()  && y+height >= p.getY() && y <= p.getY() + p.getHeight()) dead = true;
+        if (x+width >= p.getX() && x <= p.getX() + p.getWidth()  && y+height >= p.getY() && y <= p.getY() + p.getHeight()) {
+            dead = true;
+            playDeathSound();
+        }
+        else if (x+width >= p.getX() && x <= p.getX() + p.getWidth()  && y+height >= p.getY() && y <= p.getY() + p.getHeight()) {
+            dead = true;
+            playDeathSound();
+        }
     }
 
     public void checkCollision(Fighter f)
@@ -127,4 +133,16 @@ public class Enemy {
     
         return dimg;
     } 
+
+    private void playDeathSound()//plays the death sound when the player kills the zombie
+    {
+        try {
+            URL url = this.getClass().getClassLoader().getResource("Sound/Minecraft-zombiedeath.wav");
+            Clip clip = AudioSystem.getClip();
+            clip.open(AudioSystem.getAudioInputStream(url));
+            clip.start();
+        } catch (Exception exc) {
+            exc.printStackTrace(System.out);
+        }
+    }
 }
