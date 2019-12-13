@@ -11,19 +11,16 @@ import javax.imageio.ImageIO;
 import java.awt.Image;
  
 public class Fighter{
-    private int x,y,lives,width,height;
+    private int x,y,width,height;
     private boolean dead = false;
     private BufferedImage player;
      
-    private Color color;
-     
     public Fighter(int x, int y){
-        this.lives = 3;
+        //this.lives = 3;
         this.x = x;
         this.y = y;
         this.width = 50;
         this.height = 50;
-        this.color = new Color(0,0,255);
         try{
             player = resize(ImageIO.read(new File("Player.png")), 50, 50); 
         }catch(IOException e)

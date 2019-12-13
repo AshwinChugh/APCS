@@ -38,7 +38,7 @@ public class Screen extends JPanel implements KeyListener {
         }catch(IOException e){}
         
         //start all players/game elements
-        BE = new BossEnemy(400, 50);
+        BE = new BossEnemy(250, 50);
         enemies = new Enemy[5];
         p1 = new Projectile(50,800);
         f1 = new Fighter(300, 500);
@@ -107,7 +107,7 @@ public class Screen extends JPanel implements KeyListener {
                 {
                     enemies[i].setDead(true);
                 }
-                
+                BE.setSpeed(5);//slow moving because big
             }
         }
 
@@ -216,7 +216,9 @@ public class Screen extends JPanel implements KeyListener {
             }
             else
             {
-                //level 3 enemy code here
+                BE.move();
+                BE.checkCollision(f1);
+                BE.checkCollision(p1);
             }
             
 
@@ -252,7 +254,7 @@ public class Screen extends JPanel implements KeyListener {
     public void keyReleased(KeyEvent e){}
     public void keyTyped(KeyEvent e){}
 
-    private static BufferedImage resize(BufferedImage img, int newW, int newH) { 
+    private static BufferedImage resize(BufferedImage img, int newW, int newH) { //function from stack overflow that resizes the image
         Image tmp = img.getScaledInstance(newW, newH, Image.SCALE_SMOOTH);
         BufferedImage dimg = new BufferedImage(newW, newH, BufferedImage.TYPE_INT_ARGB);
     

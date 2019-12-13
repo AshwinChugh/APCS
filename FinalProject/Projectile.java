@@ -35,6 +35,7 @@ public class Projectile {
             if(y <=0)
             {
                 visibility = false;
+                BossEnemy.hitStatus = true;//allow for the boss to be hit again
                 //dead = true;
             }
                 
@@ -62,4 +63,5 @@ public class Projectile {
     //public int getPX() { return }
     public int getWidth() {return width;}
     public int getHeight() {return height;}
+    public void setVisibility(boolean value){visibility = value;}
 }

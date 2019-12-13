@@ -18,12 +18,15 @@ public class BossEnemy {
     private boolean moveLeft;
     private int speed;
 
+    public static boolean hitStatus;
+
     public BossEnemy(int x, int y){
         this.x = x;
         this.y = y;
         this.width = 200;
         this.height = 200;
         this.hits = 0;
+        this.hitStatus = true;
         //this.color = new Color(255,0,0);
         this.speed = 50;//set to an insane speed
         moveLeft = false;
@@ -39,16 +42,36 @@ public class BossEnemy {
 
     public void checkCollision(Projectile p)
     {
-        if (x+width >= p.getX() && x <= p.getX() + p.getWidth()  && y+height >= p.getY() && y <= p.getY() + p.getHeight()) hits++;
-        else if (x+width >= p.getX() && x <= p.getX() + p.getWidth()  && y+height >= p.getY() && y <= p.getY() + p.getHeight()) hits++;
+        if (x+width >= p.getX() && x <= p.getX() + p.getWidth()  && y+height >= p.getY() && y <= p.getY() + p.getHeight()){ 
+            if(hitStatus)
+            {
+                hits++;
+                hitStatus = false;
+                p.setVisible(false);
+                System.out.println("HIT");
+            }
+                
+            //System.out.println("HIT");
+        }
+        else if (x+width >= p.getX() && x <= p.getX() + p.getWidth()  && y+height >= p.getY() && y <= p.getY() + p.getHeight()) {
+            if(hitStatus)
+            {
+                hits++; 
+                hitStatus = false;
+                p.setVisible(false);
+                System.out.println("HIT");
+            }
+                
+            //System.out.println("HIT");
+        }
         
-        if(hits > 4)
+        if(hits > 4)//takes 5 hits to kill this boss enemy
         {
             this.dead = true;
         }
     }
 
-    public void checkCollision(Fighter f)
+    public void checkCollision(Fighter f)//kills the fighter on one hit
     {
         if (x+width >= f.getX() && x <= f.getX() + f.getWidth()  && y+height >= f.getY() && y <= f.getY() + f.getHeight()) f.setDead(true);
         else if (x+width >= f.getX() && x <= f.getX() + f.getWidth()  && y+height >= f.getY() && y <= f.getY() + f.getHeight()) f.setDead(true);
@@ -73,7 +96,7 @@ public class BossEnemy {
         if(!moveLeft)
         {
             moveRight();
-            if(x >= 750)
+            if(x >= 400)
             {
                 moveLeft = true;
                 moveDown();
@@ -92,7 +115,7 @@ public class BossEnemy {
     }
 
     public void moveDown(){
-        y += speed;
+        y += 20;//move down faster because this boss enemy moves slower from left to right
     }
     public void moveLeft(){
         x -= speed;
