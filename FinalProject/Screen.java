@@ -105,8 +105,10 @@ public class Screen extends JPanel implements KeyListener {
                     enemies[i].setDead(true);
                 }
                 BE.setSpeed(5);//slow moving because big
+                BE.setPos(250,50);
                 level3Setup = false;//ensure we only set up the level once
             }
+            BE.drawMe(g);//boss enemy draw function --> only draws on level 3
         }
 
         //draw enemies
@@ -115,7 +117,7 @@ public class Screen extends JPanel implements KeyListener {
             enemies[i].drawMe(g);
         }
         
-        BE.drawMe(g);//boss enemy draw function --> only draws on level 3
+        
 
 
         //display the current level, score, and lives on the screen
@@ -216,11 +218,29 @@ public class Screen extends JPanel implements KeyListener {
             }
             else
             {
-                BE.move();
+                BE.move(f1);
                 if(!BE.getDead())
                 {
                     BE.checkCollision(f1);
                     BE.checkCollision(p1);
+                }
+
+                if(f1.getDead())//if the player dies to the main boss
+                {
+                    lives--;
+                    if(lives > 0)//check if the player still has lives left
+                    {
+                        f1.setDead(false);
+                        BE.setHitCount(0);//restore the Boss Enemy's health to max
+                        BE.setPos(250, 50);
+                    }
+                    else
+                    {
+                        level1Setup = true;//allow level 1 to set up again
+                        level = 1;//restart from the beginning of the level
+                        score = 0;//reset score
+                        lives = 4;//reset lives --> set to 4 because there is a bug if the user dies the lives becomes -1 (using 4 to compensate)
+                    }
                 }
             }
             
@@ -239,7 +259,19 @@ public class Screen extends JPanel implements KeyListener {
             p1.setPosition(f1.getX()+23, f1.getY());//so it looks like the main player is shooting from his gun rather than his shoulder
         }
         if(code == 80)//cheat key(p)
-            level++;
+        {
+            level1Setup = true;
+            level2Setup = true;
+            level3Setup = true;
+            if(level == 3)
+            {
+                level = 1;
+            }
+            else
+            {
+                level++;
+            }
+        }
         if(code == 82)//restart game key
         {
             //allow for every level to get set up again(basically a game restart)
