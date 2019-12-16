@@ -21,12 +21,13 @@ public class Screen extends JPanel implements KeyListener {
     // levels stuff
     private int level, score, lives, total;
     private BufferedImage LevelOneBackground, LevelTwoBackground, LevelThreeBackground;
-    private boolean level1Setup, level2Setup, level3Setup;// ensures the levels are only set up once
+    private boolean level1Setup, level2Setup, level3Setup, endGame;// ensures the levels are only set up once
 
     public Screen() {
         score = 0;
         level = 1;
         lives = 3;
+        endGame = false;
         try {
             LevelTwoBackground = resize(
                     ImageIO.read(getClass().getClassLoader().getResourceAsStream("Graphics/level2background.png")), 800,
@@ -77,7 +78,7 @@ public class Screen extends JPanel implements KeyListener {
             g.drawImage(LevelOneBackground, 0, 0, null);
         }
 
-        if (level == 2) {
+        if (level == 2 && !endGame) {
             g.drawImage(LevelTwoBackground, 0, 0, null);
             if (level2Setup) {
                 for (int i = 0; i < enemies.length; i++) {
@@ -92,7 +93,7 @@ public class Screen extends JPanel implements KeyListener {
             }
         }
 
-        if (level == 3)// boss level
+        if (level == 3 && !endGame)// boss level
         {
             g.drawImage(LevelThreeBackground, 0, 0, null);
             if (level3Setup)// set up the final level
@@ -107,24 +108,37 @@ public class Screen extends JPanel implements KeyListener {
                 level3Setup = false;// ensure we only set up the level once
             }
             BE.drawMe(g);// boss enemy draw function --> only draws on level 3
+            if(BE.getDead())
+                endGame = true;
         }
 
-        // draw enemies
-        for (int i = 0; i < enemies.length; i++) {
+        if(endGame)
+        {
+            g.drawRect(0, 0, 800, 600);
+            g.drawString("YOU WON!", 300, 100);
+            g.drawString("Press R to restart", 300, 150);
+        }
+
+        
+
+        if(!endGame)
+        {
+            // draw enemies
+            for (int i = 0; i < enemies.length; i++) {
             enemies[i].drawMe(g);
+            }
+            // display the current level, score, and lives on the screen
+            g.drawString("Level: " + Integer.toString(level), 300, 20);
+            g.drawString("Score: " + Integer.toString(score), 300, 40);
+            g.drawString("Lives: " + Integer.toString(lives), 300, 60);
+            g.drawString("Press \"R\" to restart", 500, 20);
+    
+            // draw player
+            f1.drawMe(g);
+    
+            // draw projectile
+            p1.drawMe(g);
         }
-
-        // display the current level, score, and lives on the screen
-        g.drawString("Level: " + Integer.toString(level), 300, 20);
-        g.drawString("Score: " + Integer.toString(score), 300, 40);
-        g.drawString("Lives: " + Integer.toString(lives), 300, 60);
-        g.drawString("Press \"R\" to restart", 500, 20);
-
-        // draw player
-        f1.drawMe(g);
-
-        // draw projectile
-        p1.drawMe(g);
     }
 
     public void animate() {
@@ -247,7 +261,13 @@ public class Screen extends JPanel implements KeyListener {
             level2Setup = true;
             level3Setup = true;
             if (level == 3) {
-                level = 1;
+                if(endGame)
+                {
+                    level = 1;
+                    endGame = false;
+                }
+                else
+                    endGame = true;
             } else {
                 level++;
             }
@@ -262,6 +282,7 @@ public class Screen extends JPanel implements KeyListener {
             level = 1;// reset to first level
             lives = 3;// reset lives
             score = 0;// reset score
+            endGame = false;
         }
         repaint();
     }
